@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Emotion Recognition Dashboard 🌤️</title>
+<style>
+:root {
+  --primary: #4dafff;
+  --primary-dark: #1e90ff;
+  --accent: #86c5ff;
+  --bg: linear-gradient(135deg, #eaf6ff, #bde0ff);
+  --fg: #0a0a0a;
+  --card-bg: #ffffffaa;
+}
+body.dark {
+  --bg: linear-gradient(135deg, #0a0a0a, #222);
+  --fg: #f0f0f0;
+  --card-bg: #1e1e1ecc;
+}
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  margin: 0;
+  transition: background 0.5s, color 0.5s;
+  overflow-x: hidden;
+}
+header {
+  background: var(--primary);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+#toggleTheme {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  border: none;
+  background: var(--primary-dark);
+  color: white;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+#toggleTheme:hover { opacity: 0.9; }
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 30px;
+  padding-bottom: 50px;
+}
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  width: 420px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  padding: 20px 25px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+h2 { color: var(--primary-dark); margin-bottom: 10px; }
+textarea {
+  width: 100%; height: 80px;
+  border-radius: 8px; border: 1px solid #ccc;
+  padding: 10px; font-size: 15px;
+  resize: none;
+}
+button {
+  background: var(--primary-dark);
+  color: white; border: none; border-radius: 8px;
+  padding: 10px 18px; margin-top: 12px;
+  cursor: pointer; font-size: 15px;
+  transition: background 0.2s;
+}
+button:hover { background: var(--primary); }
+video {
+  width: 100%; border-radius: 12px;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+.table-wrapper {
+  max-height: 180px; overflow-y: auto; margin-top: 10px;
+}
+table { width: 100%; border-collapse: collapse; }
+th, td {
+  border: 1px solid #ccc; padding: 6px; text-align: center;
+}
+th { background: #f0faff; }
+.bar {
+  height: 8px; border-radius: 5px;
+  background: var(--primary);
+  transition: width 0.5s ease-in-out;
+}
+.conf-ring {
+  margin: 15px auto;
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: conic-gradient(var(--primary-dark) calc(var(--p) * 1%), #ccc 0);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+}
+#history {
+  width: 90%;
+  margin: 20px auto;
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 20px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+}
+#clearBtn {
+  background: #e63946;
+  margin-top: 10px;
+}
+#clearBtn:hover { background: #b22234; }
+@media (max-width: 900px){ .card { width: 90%; } }
+</style>
+</head>
+<body>
+<header>Emotion Recognition Dashboard 🌤️</header>
+<button id="toggleTheme">🌙 Dark Mode</button>
+
+<div class="container">
+  <div class="card">
+    <h2>📝 Text Emotion</h2>
+    <textarea id="textInput" placeholder="Type something..."></textarea><br>
+    <button id="textBtn">Analyze Text</button>
+    <div class="conf-ring" id="textRing" style="--p:0">💬</div>
+    <p><b>Emotion:</b> <span id="textLabel">-</span></p>
+    <div class="table-wrapper">
+      <table><thead><tr><th>Emotion</th><th>Confidence</th></tr></thead><tbody id="textProbs"></tbody></table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📷 Facial Emotion (Webcam)</h2>
+    <video id="video" autoplay muted playsinline></video><br>
+    <button id="imgBtn">▶️ Start Live Detection</button>
+    <div class="conf-ring" id="imgRing" style="--p:0">😐</div>
+    <p><b>Emotion:</b> <span id="imgLabel">-</span></p>
+  </div>
+</div>
+
+<div id="history">
+  <h2>📜 Emotion History</h2>
+  <button id="clearBtn">🧹 Clear History</button>
+  <table>
+    <thead><tr><th>Time</th><th>Source</th><th>Emotion</th><th>Confidence</th></tr></thead>
+    <tbody id="historyBody"></tbody>
+  </table>
+</div>
+
+<script>
+const toggle=document.getElementById('toggleTheme');
+let dark=false;
+toggle.onclick=()=>{dark=!dark;document.body.classList.toggle('dark');
+toggle.textContent=dark?'☀️ Light Mode':'🌙 Dark Mode';};
+
+// webcam setup
+const video=document.getElementById("video");
+navigator.mediaDevices.getUserMedia({video:true}).then(s=>video.srcObject=s);
+
+function updateRing(id, p){
+  const ring=document.getElementById(id);
+  ring.style.setProperty("--p", (p*100).toFixed(1));
+}
+function addHistory(src, label, conf){
+  const t=new Date().toLocaleTimeString();
+  const row=document.createElement("tr");
+  row.innerHTML=`<td>${t}</td><td>${src}</td><td>${label}</td><td>${(conf*100).toFixed(1)}%</td>`;
+  document.getElementById("historyBody").prepend(row);
+}
+
+document.getElementById("clearBtn").onclick=()=>{document.getElementById("historyBody").innerHTML="";};
+
+async function analyzeText(){
+  const txt=document.getElementById("textInput").value.trim();
+  if(!txt){alert("Enter text!");return;}
+  document.getElementById("textLabel").textContent="...";
+  const r=await fetch("/predict_text",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:txt})});
+  const d=await r.json();
+  const em=d.label||"-";
+  const emoji={"angry":"😡","anger":"😡","disgust":"🤢","fear":"😱","happy":"😊","joy":"😊","love":"❤️","neutral":"😐","sad":"😢","sadness":"😢","surprise":"😲"}[em]||"";
+  document.getElementById("textLabel").textContent=em+" "+emoji;
+  const maxP=Math.max(...d.probs);
+  updateRing("textRing",maxP);
+  const tb=document.getElementById("textProbs");
+  tb.innerHTML="";
+  d.classes.forEach((c,i)=>{
+    const tr=document.createElement("tr");
+    const w=(d.probs[i]*100).toFixed(1);
+    tr.innerHTML=`<td>${c}</td><td><div class='bar' style='width:${w}%;'></div> ${w}%</td>`;
+    tb.appendChild(tr);
+  });
+  addHistory("Text", em+" "+emoji, maxP);
+}
+
+async function analyzeImage(auto=false){
+  const canvas=document.createElement("canvas");
+  canvas.width=video.videoWidth;canvas.height=video.videoHeight;
+  canvas.getContext("2d").drawImage(video,0,0);
+  const blob=await new Promise(r=>canvas.toBlob(r,"image/jpeg",0.8));
+  const fd=new FormData();fd.append("file",blob,"frame.jpg");
+  const res=await fetch("/predict_image",{method:"POST",body:fd});
+  const d=await res.json();
+  if(d.error)return;
+  const em=d.label||"-";
+  const emoji={"angry":"😡","disgust":"🤢","fear":"😱","happy":"😊","neutral":"😐","sad":"😢","surprise":"😲"}[em]||"";
+  document.getElementById("imgLabel").textContent=em+" "+emoji;
+  const maxP=Math.max(...d.probs);
+  updateRing("imgRing",maxP);
+  addHistory("Webcam", em+" "+emoji, maxP);
+}
+
+let live=false,interval;
+document.getElementById("imgBtn").onclick=()=>{
+  live=!live;
+  if(live){
+    document.getElementById("imgBtn").textContent="⏹ Stop Live Detection";
+    analyzeImage(true);
+    interval=setInterval(()=>analyzeImage(true),2000);
+  }else{
+    document.getElementById("imgBtn").textContent="▶️ Start Live Detection";
+    clearInterval(interval);
+  }
+};
+
+document.getElementById("textBtn").onclick=analyzeText;
+</script>
+</body>
+</html>

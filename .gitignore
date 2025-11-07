@@ -1,0 +1,115 @@
+# ==========================
+# Python & Virtual Env
+# ==========================
+venv/
+env/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.pdb
+*.pkl
+*.pickle
+*.joblib
+*.DS_Store
+*.log
+
+# ==========================
+# IDE / Editor Files
+# ==========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# ==========================
+# Build / Distribution
+# ==========================
+build/
+dist/
+*.egg-info/
+.eggs/
+MANIFEST
+*.spec
+
+# ==========================
+# OS-specific Files
+# ==========================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+Icon?
+$RECYCLE.BIN/
+*.lnk
+
+# ==========================
+# TensorFlow / Keras / Checkpoints
+# ==========================
+checkpoints/
+saved_models/
+*.h5
+*.hdf5
+*.pb
+*.ckpt*
+*.tflite
+
+# ==========================
+# Datasets & Models
+# ==========================
+data/
+models/
+!models/.gitkeep
+!data/.gitkeep
+
+# ==========================
+# Temporary & Cache Files
+# ==========================
+.cache/
+.ipynb_checkpoints/
+*.tmp
+*.temp
+*.bak
+
+# ==========================
+# Reports / Outputs
+# ==========================
+*.csv
+*.xlsx
+*.json
+*.xml
+*.txt
+output/
+results/
+logs/
+plots/
+
+# ==========================
+# Node / Frontend (if used later)
+# ==========================
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# ==========================
+# PyCharm & JetBrains
+# ==========================
+.idea/
+*.iml
+
+# ==========================
+# Jupyter Notebook Stuff
+# ==========================
+.ipynb_checkpoints/
+
+# ==========================
+# Backup / Miscellaneous
+# ==========================
+*.bak
+*.old
+*.orig
+*.tmp
+*.temp
