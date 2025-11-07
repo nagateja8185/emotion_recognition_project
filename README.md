@@ -7,6 +7,7 @@
 
 ## 📁 Emotion Recognition Project Structure
 
+```bash
 emotion_detection_project/
 │
 ├── 📄 README.md                         # Project documentation (setup, usage, etc.)
@@ -50,6 +51,7 @@ emotion_detection_project/
 ├── 📜 requirements.txt                  # Python dependencies for easy setup
 │
 └── ⚙️ .gitignore                        # Ignores data, models, cache, venv, and temp files
+
 
 ---
 
