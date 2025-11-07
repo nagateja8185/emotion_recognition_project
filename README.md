@@ -59,7 +59,8 @@ emotion_detection_project/
 
 ### **Emotion Recognition System (Facial & Text-based)**  
 
-This project detects human emotions from **facial expressions (via webcam)** and **text input** using a combination of **deep learning (CNN)** and **machine learning (NLP pipeline)** models.  
+This project detects human emotions from **facial expressions (via webcam)** and **text input** 
+using a combination of **deep learning (CNN)** and **machine learning (NLP pipeline)** models.  
 It provides real-time emotion analysis with a beautiful, responsive web interface — without using Flask or FastAPI.  
 
 #### 🎯 **Purpose**
