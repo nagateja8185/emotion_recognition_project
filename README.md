@@ -9,14 +9,14 @@
 
 emotion_detection_project/
 │
-├── 📄 README.md                         # Project documentation (you just created this)
+├── 📄 README.md                         # Project documentation (setup, usage, etc.)
 │
 ├── 🧠 models/                           # Trained models for both modalities
 │   ├── image_emotion.h5                 # CNN model for facial emotion recognition
 │   └── text_emotion/
-│       └── pipeline.joblib              # Trained NLP pipeline for text emotion classification
+│       └── pipeline.joblib              # Trained NLP model for text emotion classification
 │
-├── 📂 data/                             # Datasets used for training
+├── 📂 data/                             # Datasets for training and validation
 │   ├── images/
 │   │   └── fer2013/
 │   │       ├── train/
@@ -31,25 +31,25 @@ emotion_detection_project/
 │   │       └── validation/
 │   │
 │   └── text/
-│       ├── train.txt                    # Training data (text + emotion)
-│       ├── val.txt                      # Validation data
-│       └── test.txt                     # Testing data
+│       ├── train.txt                    # Training text + labels
+│       ├── val.txt                      # Validation text + labels
+│       └── test.txt                     # Testing text + labels
 │
-├── 🧩 src/                              # Source Python scripts
-│   ├── train_image.py                   # Trains the CNN model on FER2013 dataset
-│   ├── train_text.py                    # Trains the text emotion classification pipeline
-│   ├── webcam_infer.py                  # Optional script for direct webcam testing
-│   └── multimodal_server.py             # Core backend server for browser communication (no Flask/FastAPI)
+├── 🧩 src/                              # Core Python source files
+│   ├── train_image.py                   # Trains CNN on FER-2013 dataset
+│   ├── train_text.py                    # Trains NLP model for emotion detection
+│   ├── webcam_infer.py                  # Optional direct webcam inference
+│   └── multimodal_server.py             # Backend server (no Flask/FastAPI used)
 │
-├── 🌐 web_demo/                         # Frontend web files (user interface)
-│   ├── index.html                       # Beautiful sky-blue themed UI (text + webcam detection)
-│   └── assets/                          # (Optional) for CSS, JS, or icons (if needed later)
+├── 🌐 web_demo/                         # Frontend web interface
+│   ├── index.html                       # Responsive sky-blue UI for text & webcam
+│   └── assets/                          # (Optional) Static files like CSS, JS, or icons
 │
-├── 🧰 venv/                             # Virtual environment (Python dependencies)
+├── 🧰 venv/                             # Python virtual environment (ignored in Git)
 │
-├── 📜 requirements.txt                  # (Optional) List of required dependencies
+├── 📜 requirements.txt                  # Python dependencies for easy setup
 │
-└── ⚙️ .gitignore                        # (Optional) Ignore venv, __pycache__, etc.
+└── ⚙️ .gitignore                        # Ignores data, models, cache, venv, and temp files
 
 ---
 
