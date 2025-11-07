@@ -5,6 +5,52 @@
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-lightgrey.svg)
 
+## 📁 Emotion Recognition Project Structure
+
+emotion_detection_project/
+│
+├── 📄 README.md                         # Project documentation (you just created this)
+│
+├── 🧠 models/                           # Trained models for both modalities
+│   ├── image_emotion.h5                 # CNN model for facial emotion recognition
+│   └── text_emotion/
+│       └── pipeline.joblib              # Trained NLP pipeline for text emotion classification
+│
+├── 📂 data/                             # Datasets used for training
+│   ├── images/
+│   │   └── fer2013/
+│   │       ├── train/
+│   │       │   ├── angry/
+│   │       │   ├── disgust/
+│   │       │   ├── fear/
+│   │       │   ├── happy/
+│   │       │   ├── neutral/
+│   │       │   ├── sad/
+│   │       │   └── surprise/
+│   │       ├── test/
+│   │       └── validation/
+│   │
+│   └── text/
+│       ├── train.txt                    # Training data (text + emotion)
+│       ├── val.txt                      # Validation data
+│       └── test.txt                     # Testing data
+│
+├── 🧩 src/                              # Source Python scripts
+│   ├── train_image.py                   # Trains the CNN model on FER2013 dataset
+│   ├── train_text.py                    # Trains the text emotion classification pipeline
+│   ├── webcam_infer.py                  # Optional script for direct webcam testing
+│   └── multimodal_server.py             # Core backend server for browser communication (no Flask/FastAPI)
+│
+├── 🌐 web_demo/                         # Frontend web files (user interface)
+│   ├── index.html                       # Beautiful sky-blue themed UI (text + webcam detection)
+│   └── assets/                          # (Optional) for CSS, JS, or icons (if needed later)
+│
+├── 🧰 venv/                             # Virtual environment (Python dependencies)
+│
+├── 📜 requirements.txt                  # (Optional) List of required dependencies
+│
+└── ⚙️ .gitignore                        # (Optional) Ignore venv, __pycache__, etc.
+
 ---
 
 ## 🧠 1. Project Title and Description
