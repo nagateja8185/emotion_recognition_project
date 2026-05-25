@@ -1,6 +1,6 @@
 # 🧠 Emotion Recognition AI - Facial Expressions and Text
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.8_to_3.12-blue.svg)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.12+-orange.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)
@@ -135,7 +135,7 @@ emotion_detection_project/
 
 ### Prerequisites
 
-- ✅ **Python 3.8 or higher**
+- ✅ **Python 3.8 to 3.12 (Python 3.12 recommended)**
 - ✅ **~2GB free disk space**
 - ✅ **Webcam** (for facial detection)
 - ✅ **Modern browser** (Chrome/Edge/Firefox)
@@ -145,6 +145,13 @@ emotion_detection_project/
 #### 1. Create Virtual Environment (Recommended)
 
 **Windows:**
+> [!NOTE]
+> TensorFlow officially supports **Python 3.8 to 3.12** on Windows. If your default Python is newer (e.g. Python 3.14+), use the Windows Python Launcher (`py`) to specify Python 3.12:
+```bash
+py -3.12 -m venv venv
+venv\Scripts\activate
+```
+Otherwise, use standard python:
 ```bash
 python -m venv venv
 venv\Scripts\activate
@@ -427,6 +434,24 @@ Features:
 
 ## 🛠️ Troubleshooting
 
+### ❌ TensorFlow installation fails ("No matching distribution found")
+
+**Solution:**
+This occurs if your active Python version is newer than Python 3.12 (e.g. Python 3.13 or 3.14), for which pre-compiled Windows TensorFlow packages are not yet available.
+1. Remove your existing `venv` folder.
+2. Install Python 3.12 (e.g. via `winget install Python.Python.3.12` or python.org).
+3. Re-create the virtual environment using Python 3.12:
+   ```bash
+   py -3.12 -m venv venv
+   ```
+4. Activate it and install dependencies:
+   ```bash
+   venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+---
+
 ### ❌ "Model not found" Error
 
 **Solution:**
@@ -509,7 +534,7 @@ pip install tensorflow-cpu
 - **CPU:** Intel i3 or equivalent (4 cores)
 - **RAM:** 8 GB
 - **Storage:** 2 GB free space
-- **Python:** 3.8 or higher
+- **Python:** 3.8 to 3.12 (3.12 recommended)
 - **Webcam:** 640x480 resolution minimum
 
 ### Recommended Requirements
