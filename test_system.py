@@ -6,6 +6,18 @@ Validates that all components are working correctly
 import os
 import sys
 
+# Suppress TensorFlow verbose logging & oneDNN custom operations warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
+# Force UTF-8 encoding on standard streams to prevent UnicodeEncodeError on Windows
+if sys.platform.startswith('win'):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
+    except AttributeError:
+        pass
+
 def print_test_header(test_name):
     print(f"\n{'='*60}")
     print(f"  🧪 {test_name}")

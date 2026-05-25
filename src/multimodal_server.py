@@ -6,6 +6,10 @@ Sky Blue Laptop-Friendly Emotion Recognition Server
 """
 
 import os
+# Suppress TensorFlow verbose logging & oneDNN custom operations warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
 import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from email.parser import BytesParser

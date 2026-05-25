@@ -31,7 +31,7 @@ def main():
     
     # Train image model
     print_header("📸 STEP 1: Training Image Emotion Detection Model")
-    image_script = os.path.join(script_dir, "train_image.py")
+    image_script = os.path.join(script_dir, "src", "train_image.py")
     
     if not os.path.exists(image_script):
         print(f"❌ Error: {image_script} not found!")
@@ -49,7 +49,7 @@ def main():
     
     # Train text model
     print_header("💬 STEP 2: Training Text Emotion Detection Model")
-    text_script = os.path.join(script_dir, "train_text.py")
+    text_script = os.path.join(script_dir, "src", "train_text.py")
     
     if not os.path.exists(text_script):
         print(f"❌ Error: {text_script} not found!")
